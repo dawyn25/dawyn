@@ -351,3 +351,91 @@ body.dark-mode .divide-gray-200 > div:hover {
 body.dark-mode .bg-gray-50\/50 {
     background: rgba(255, 255, 255, 0.05);
 }
+/* NỀN ĐỘNG SIÊU CẤP */
+.animated-background {
+  position: fixed; /* Cố định toàn màn hình */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Nằm dưới cùng */
+  opacity: 0.05; /* Mờ ở chế độ sáng để không lóa mắt */
+  transition: opacity 0.5s ease;
+  pointer-events: none; /* Không ngăn cản click vào các nút khác */
+  
+  /* Code gốc bạn gửi */
+  --c: 7px;
+  background-color: #000;
+  background-image: radial-gradient(
+      circle at 50% 50%,
+      #0000 1.5px,
+      #000 0 var(--c),
+      #0000 var(--c)
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      #0000 1.5px,
+      #000 0 var(--c),
+      #0000 var(--c)
+    ),
+    radial-gradient(circle at 50% 50%, #f00, #f000 60%),
+    radial-gradient(circle at 50% 50%, #ff0, #ff00 60%),
+    radial-gradient(circle at 50% 50%, #0f0, #0f00 60%),
+    radial-gradient(ellipse at 50% 50%, #00f, #00f0 60%);
+  background-size:
+    12px 20.7846097px,
+    12px 20.7846097px,
+    200% 200%,
+    200% 200%,
+    200% 200%,
+    200% 20.7846097px;
+  --p: 0px 0px, 6px 10.39230485px;
+  background-position:
+    var(--p),
+    0% 0%,
+    0% 0%,
+    0% 0%,
+    0% 0px;
+  animation:
+    wee 40s linear infinite,
+    filt 6s linear infinite;
+}
+
+/* Khi bật Dark Mode, nền này sẽ hiện rõ hơn nhìn cực "Cyberpunk" */
+body.dark-mode .animated-background {
+  opacity: 0.4;
+}
+
+@keyframes filt {
+  0% { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(360deg); }
+}
+
+@keyframes wee {
+  0% {
+    background-position:
+      var(--p),
+      800% 400%,
+      1000% -400%,
+      -1200% -600%,
+      400% 41.5692194px;
+  }
+  to {
+    background-position:
+      var(--p),
+      0% 0%,
+      0% 0%,
+      0% 0%,
+      0% 0%;
+  }
+}
+
+/* Tinh chỉnh để nội dung nổi bật trên nền mới */
+.card-content {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(10px);
+}
+
+body.dark-mode .card-content {
+    background: rgba(15, 23, 42, 0.6) !important;
+}
