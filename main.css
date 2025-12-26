@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+/* ==========================================
+   PHÁT HIỆN THIẾT BỊ VÀ TỐI ỨU HIỆU NĂNG
+   ========================================== */
+
 /* Container cố định vị trí nút trên màn hình */
 .theme-toggle-container {
     position: fixed;
@@ -10,7 +14,7 @@
 
 /* --- BẮT ĐẦU CSS GỐC CỦA BẠN (KHÔNG THAY ĐỔI) --- */
 .theme-switch {
-  --toggle-size: 20px; /* Bạn có thể chỉnh to nhỏ ở đây */
+  --toggle-size: 20px;
   --container-width: 5.625em;
   --container-height: 2.5em;
   --container-radius: 6.25em;
@@ -208,7 +212,10 @@
 }
 /* --- KẾT THÚC CSS GỐC --- */
 
-/* LOGIC SYNC VỚI GIAO DIỆN WEB */
+/* ==========================================
+   LOGIC SYNC VỚI GIAO DIỆN WEB
+   ========================================== */
+
 body {
     transition: background 0.5s ease, color 0.5s ease;
     background-color: #f8fafc;
@@ -230,12 +237,62 @@ body.dark-mode nav {
 }
 
 /* CSS Cho Nút Help */
-.help-btn-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
-.Social-Btn { width: 4.5em; height: 2.5em; border-radius: 7px; cursor: pointer; transition: all 0.3s; position: relative; }
-.svgContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 1px solid rgba(156, 156, 156, 0.4); background: rgba(83, 69, 69, 0.2); backdrop-filter: blur(5px); }
-.svgContainer svg { width: 1.5rem; fill: currentColor; }
-.BG { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; border-radius: 10px; transition: all 0.5s; display: flex; justify-content: center; align-items: center; font-weight: 600; color: transparent; }
-.Social-Btn:hover .BG { transform: translateY(-130%); background: white; color: black; z-index: 10; }
+.help-btn-container { 
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 1000; 
+}
+
+.Social-Btn { 
+    width: 4.5em; 
+    height: 2.5em; 
+    border-radius: 7px; 
+    cursor: pointer; 
+    transition: all 0.3s; 
+    position: relative; 
+}
+
+.svgContainer { 
+    width: 100%; 
+    height: 100%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    border-radius: 10px; 
+    border: 1px solid rgba(156, 156, 156, 0.4); 
+    background: rgba(83, 69, 69, 0.2); 
+    backdrop-filter: blur(5px); 
+}
+
+.svgContainer svg { 
+    width: 1.5rem; 
+    fill: currentColor; 
+}
+
+.BG { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    z-index: -1; 
+    border-radius: 10px; 
+    transition: all 0.5s; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-weight: 600; 
+    color: transparent; 
+}
+
+.Social-Btn:hover .BG { 
+    transform: translateY(-130%); 
+    background: white; 
+    color: black; 
+    z-index: 10; 
+}
+
 /* Animation cho Logo DAWYN */
 .dash {
     stroke-dasharray: 0 1 359 0;
@@ -255,8 +312,9 @@ body.dark-mode nav {
 
 /* Fix vị trí navbar để logo không bị che */
 nav .max-w-6xl {
-    height: 60px; /* Chỉnh độ cao thanh nav cho cân đối */
+    height: 60px;
 }
+
 /* NÚT NHẤN ĐỂ XEM - SHINY GRADIENT */
 .btn-shiny {
     display: inline-flex;
@@ -278,13 +336,11 @@ nav .max-w-6xl {
     margin-top: 10px;
 }
 
-/* Hiệu ứng di chuột */
 .btn-shiny:hover {
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 10px 25px rgba(151, 59, 237, 0.5);
 }
 
-/* Hiệu ứng ánh sáng chạy qua (Shine) */
 .btn-shiny::before {
     content: "";
     position: absolute;
@@ -305,7 +361,6 @@ nav .max-w-6xl {
     left: 100%;
 }
 
-/* Biểu tượng mũi tên */
 .btn-shiny i {
     transition: transform 0.3s ease;
 }
@@ -314,10 +369,10 @@ nav .max-w-6xl {
     transform: translateX(4px);
 }
 
-/* Đồng bộ Dark Mode: Khi bật Dark mode nút sẽ rực rỡ hơn */
 body.dark-mode .btn-shiny {
     box-shadow: 0 0 15px rgba(151, 59, 237, 0.4);
 }
+
 /* Nút tải về phiên bản Dashboard */
 .btn-download-new {
     display: flex;
@@ -339,7 +394,6 @@ body.dark-mode .btn-shiny {
     box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
 }
 
-/* Tinh chỉnh cho chế độ Dark Mode */
 body.dark-mode .divide-gray-200 > div {
     border-color: rgba(255, 255, 255, 0.1);
 }
@@ -351,19 +405,22 @@ body.dark-mode .divide-gray-200 > div:hover {
 body.dark-mode .bg-gray-50\/50 {
     background: rgba(255, 255, 255, 0.05);
 }
-/* NỀN ĐỘNG SIÊU CẤP */
+
+/* ==========================================
+   NỀN ĐỘNG - CHỈ HIỂN THỊ TRÊN MÁY TÍNH
+   ========================================== */
+
 .animated-background {
-  position: fixed; /* Cố định toàn màn hình */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1; /* Nằm dưới cùng */
-  opacity: 0.05; /* Mờ ở chế độ sáng để không lóa mắt */
+  z-index: -1;
+  opacity: 0.05;
   transition: opacity 0.5s ease;
-  pointer-events: none; /* Không ngăn cản click vào các nút khác */
+  pointer-events: none;
   
-  /* Code gốc bạn gửi */
   --c: 7px;
   background-color: #000;
   background-image: radial-gradient(
@@ -401,7 +458,6 @@ body.dark-mode .bg-gray-50\/50 {
     filt 6s linear infinite;
 }
 
-/* Khi bật Dark Mode, nền này sẽ hiện rõ hơn nhìn cực "Cyberpunk" */
 body.dark-mode .animated-background {
   opacity: 0.4;
 }
@@ -438,4 +494,137 @@ body.dark-mode .animated-background {
 
 body.dark-mode .card-content {
     background: rgba(15, 23, 42, 0.6) !important;
+}
+
+/* ==========================================
+   TỐI ƯU HÓA CHO MOBILE - QUAN TRỌNG NHẤT
+   ========================================== */
+
+/* Phát hiện thiết bị di động và tablet */
+@media only screen and (max-width: 1024px) {
+    
+    /* ❌ TẮT NỀN ĐỘNG HOÀN TOÀN trên mobile */
+    .animated-background {
+        display: none !important;
+    }
+    
+    /* ❌ TẮT BACKDROP BLUR - Rất nặng trên mobile */
+    .card-content,
+    nav,
+    .svgContainer {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    
+    /* ✅ Thay backdrop-blur bằng màu đặc */
+    .card-content {
+        background: rgba(255, 255, 255, 0.95) !important;
+    }
+    
+    body.dark-mode .card-content {
+        background: rgba(15, 23, 42, 0.95) !important;
+    }
+    
+    nav {
+        background: rgba(255, 255, 255, 0.95) !important;
+    }
+    
+    body.dark-mode nav {
+        background: rgba(15, 23, 42, 0.95) !important;
+    }
+    
+    /* ❌ GIẢM SHADOW - Shadow phức tạp gây lag */
+    .btn-download-new,
+    .btn-shiny {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+    }
+    
+    .btn-download-new:hover,
+    .btn-shiny:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    /* ❌ TẮT ANIMATION LOGO trên mobile */
+    .dash {
+        animation: none !important;
+        stroke-dasharray: 359 1 0 0;
+    }
+    
+    /* ✅ GIẢM TRANSITION TIME - Mượt hơn */
+    * {
+        transition-duration: 0.2s !important;
+    }
+    
+    /* ✅ Tối ưu nút Help */
+    .help-btn-container {
+        bottom: 80px; /* Tránh menu dưới cùng của mobile */
+    }
+    
+    .svgContainer {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    body.dark-mode .svgContainer {
+        background: rgba(15, 23, 42, 0.9);
+    }
+}
+
+/* Tối ưu thêm cho điện thoại nhỏ */
+@media only screen and (max-width: 640px) {
+    
+    /* Giảm kích thước logo */
+    .theme-toggle-container {
+        transform: scale(0.85);
+        transform-origin: top right;
+    }
+    
+    /* Giảm padding để tiết kiệm không gian */
+    section {
+        padding: 40px 20px !important;
+    }
+    
+    /* Nút help nhỏ hơn */
+    .Social-Btn {
+        width: 3.5em;
+        height: 2em;
+    }
+}
+
+/* ==========================================
+   THIẾT BỊ CÓ REFRESH RATE THẤP
+   ========================================== */
+
+/* Giảm FPS animation cho thiết bị yếu */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .animated-background {
+        display: none !important;
+    }
+}
+
+/* ==========================================
+   TỐI ƯU HÓA GPU ACCELERATION
+   ========================================== */
+
+/* Chỉ bật GPU cho các element cần thiết */
+.theme-switch__circle-container,
+.theme-switch__moon,
+.btn-shiny,
+.btn-download-new {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* Tắt GPU cho các element không cần */
+@media only screen and (max-width: 1024px) {
+    * {
+        will-change: auto !important;
+    }
 }
