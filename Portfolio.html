@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dawyn Dang</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font-display: 'Instrument Serif', serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: #07070b;
+      color: #f1f5f9;
+      overflow-x: hidden;
+    }
+
+    /* ════════════════════════════════
+       LIQUID GLASS (Đã fix viền mờ tinh tế)
+    ════════════════════════════════ */
+    .liquid-glass {
+      background: rgba(255,255,255,0.01);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: none;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .liquid-glass::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: inherit; padding: 1.4px;
+      background: linear-gradient(180deg,
+        rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.1) 20%,
+        rgba(255,255,255,0)    40%, rgba(255,255,255,0)    60%,
+        rgba(255,255,255,0.1) 80%, rgba(255,255,255,0.25) 100%) !important;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* ════════════════════════════════
+       HERO
+    ════════════════════════════════ */
+    .hero {
+      position: relative;
+      width: 100%; height: 100vh; min-height: 600px;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .hero__video {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; z-index: 0;
+    }
+    .hero__overlay {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.60) 100%);
+      z-index: 1;
+    }
+
+    /* ════════════════════════════════
+       NAV (Đã fix hình viên thuốc tròn vo)
+    ════════════════════════════════ */
+    .nav { 
+      position: absolute; 
+      top: 1.5rem; 
+      left: 0;
+      width: 100%; 
+      z-index: 100; 
+      display: flex;
+      justify-content: center; 
+    }
+    .nav__inner {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      width: 90%; 
+      max-width: 900px; 
+      padding: 1rem 2rem !important; 
+      background: rgba(10, 10, 15, 0.6) !important; 
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important; 
+      border-radius: 9999px !important; 
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+    .nav__logo {
+      font-family: var(--font-display);
+      font-size: 1.875rem; letter-spacing: -0.025em;
+      color: #fff; text-decoration: none; user-select: none;
+    }
+    .nav__links { display: flex; gap: 2rem; align-items: center; list-style: none; margin: 0; padding: 0; }
+    .nav__links a {
+      font-size: 0.875rem; color: rgba(255,255,255,0.7);
+      text-decoration: none; transition: color 0.2s; font-weight: 500;
+    }
+    .nav__links a:hover, .nav__links a.active { color: #fff; }
+
+    /* Fix chữ Phuc Dat không bị màu xanh */
+    .btn--nav {
+      color: #fff !important; 
+    }
+
+    .btn {
+      border-radius: 9999px; cursor: pointer;
+      font-family: var(--font-body); color: #fff;
+      transition: transform 0.2s; display: inline-block; text-decoration: none;
+    }
+    .btn:hover { transform: scale(1.03); }
+    .btn--nav  { padding: 0.625rem 1.5rem; font-size: 0.875rem; }
+    .btn--hero { padding: 1.25rem 3.5rem; font-size: 1rem; margin-top: 3rem; }
+
+    /* HERO CONTENT */
+    .hero__content {
+      position: relative; z-index: 20; flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 5rem 1.5rem 6rem;
+    }
+    .hero__content-inner {
+      background: rgba(0,0,0,0.28);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      border-radius: 1.5rem; padding: 3rem 3.5rem;
+      display: flex; flex-direction: column; align-items: center;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.4);
+    }
+    .hero__title {
+      font-family: var(--font-display); font-weight: 400;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      line-height: 0.95; letter-spacing: -2.46px;
+      max-width: 80rem; color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.9), 0 4px 32px rgba(0,0,0,0.7), 0 1px 2px rgba(0,0,0,1);
+    }
+    .hero__title em {
+      font-style: normal; color: rgba(168,168,178,1);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.9), 0 4px 32px rgba(0,0,0,0.7);
+    }
+    .hero__sub {
+      color: rgba(255,255,255,0.9);
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      max-width: 42rem; margin-top: 2rem; line-height: 1.7;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.95), 0 2px 20px rgba(0,0,0,0.8);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fade-rise {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim-1 { animation: fade-rise 0.8s ease-out 0.0s both; }
+    .anim-2 { animation: fade-rise 0.8s ease-out 0.2s both; }
+    .anim-3 { animation: fade-rise 0.8s ease-out 0.4s both; }
+
+    /* ════════════════════════════════
+       SECTIONS & FILE TABLE & CHỨNG CHỈ (Giữ nguyên)
+    ════════════════════════════════ */
+    .section { padding: 6rem 1.5rem; background: #0a0a0f; }
+    .section--alt { background: #0d0d15; }
+    .section__inner { max-width: 62rem; margin: 0 auto; }
+    .section__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 400; letter-spacing: -1px;
+      color: #fff; margin-bottom: 2.5rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .section__title i { color: #818cf8; font-size: 1.4rem; }
+
+    .file-table { border-radius: 1.25rem; overflow: hidden; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.025); backdrop-filter: blur(16px); }
+    .file-table__head { display: grid; grid-template-columns: 1fr 150px 140px; padding: 1rem 1.5rem; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.28); border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .file-row { display: grid; grid-template-columns: 1fr 150px 140px; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s; gap: 1rem; }
+    .file-row:last-child { border-bottom: none; }
+    .file-row:hover { background: rgba(99,102,241,0.07); }
+    .file-row__info { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+    .file-icon { width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .icon--pdf  { background: rgba(239,68,68,0.12);  color: #f87171; }
+    .icon--zip  { background: rgba(59,130,246,0.12); color: #60a5fa; }
+    .icon--word { background: rgba(34,197,94,0.12);  color: #4ade80; }
+    .file-name  { font-weight: 600; font-size: 0.95rem; color: #f1f5f9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .file-desc  { font-size: 0.78rem; color: rgba(255,255,255,0.32); margin-top: 2px; }
+    .file-type  { font-size: 0.8rem; color: rgba(255,255,255,0.28); font-style: italic; }
+    .btn-dl { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.1rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.28); text-decoration: none; transition: background 0.2s, transform 0.15s; white-space: nowrap; }
+    .btn-dl:hover { background: rgba(99,102,241,0.3); transform: scale(1.05); }
+
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+    .cert-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.25rem; padding: 1.5rem; display: flex; gap: 1.25rem; align-items: flex-start; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; backdrop-filter: blur(10px); }
+    .cert-card:hover { background: rgba(99,102,241,0.07); transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.4); }
+    .cert-img { width: 5rem; height: 5rem; object-fit: cover; border-radius: 0.75rem; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); cursor: zoom-in; transition: transform 0.2s; }
+    .cert-img:hover { transform: scale(1.05); }
+    .cert-img-placeholder { width: 5rem; height: 5rem; border-radius: 0.75rem; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; }
+    .cert-body { flex: 1; min-width: 0; }
+    .cert-name { font-weight: 600; font-size: 0.95rem; color: #f1f5f9; line-height: 1.4; margin-bottom: 0.35rem; }
+    .cert-org { font-size: 0.78rem; color: rgba(255,255,255,0.38); margin-bottom: 0.6rem; }
+    .cert-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 9999px; letter-spacing: 0.04em; }
+    .badge--blue   { background: rgba(59,130,246,0.18); color: #93c5fd; border: 1px solid rgba(59,130,246,0.28); }
+    .badge--purple { background: rgba(139,92,246,0.18); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.28); }
+    .badge--green  { background: rgba(34,197,94,0.15);  color: #86efac; border: 1px solid rgba(34,197,94,0.25); }
+    .cert-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.75rem; color: #818cf8; text-decoration: none; margin-top: 0.5rem; transition: color 0.2s; }
+    .cert-link:hover { color: #a5b4fc; text-decoration: underline; }
+
+    .lightbox { position: fixed; inset: 0; z-index: 9999; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .lightbox.active { opacity: 1; visibility: visible; }
+    .lightbox__content { position: relative; max-width: 90%; max-height: 90%; transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .lightbox.active .lightbox__content { transform: scale(1); }
+    .lightbox__img { width: auto; height: auto; max-width: 100vw; max-height: 90vh; border-radius: 0.75rem; box-shadow: 0 12px 48px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); display: block; }
+    .lightbox__close { position: absolute; top: -2.5rem; right: 0; color: rgba(255,255,255,0.7); font-size: 1.8rem; cursor: pointer; background: none; border: none; padding: 0; transition: color 0.2s, transform 0.2s; }
+    .lightbox__close:hover { color: #fff; transform: scale(1.1); }
+
+    .contact { padding: 5rem 1.5rem 4rem; background: #060608; text-align: center; }
+    .contact__title { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 400; color: #f1f5f9; margin-bottom: 2.5rem; letter-spacing: -0.5px; line-height: 1.3; }
+    .social-row { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+    .social-btn { display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.75rem 1.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
+    .social-btn::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.03)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+    .social-btn:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 32px rgba(0,0,0,0.5); }
+    .social-btn--fb { background: rgba(24,119,242,0.15); color: #93c5fd; border: 1px solid rgba(24,119,242,0.28); }
+    .social-btn--tt { background: rgba(255,255,255,0.06); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.1); }
+    .social-btn--em { background: rgba(239,68,68,0.12);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.22); }
+    .divider { height: 1px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.07), transparent); }
+    .contact__copy { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.18); margin-top: 2rem; }
+
+    /* ════════════════════════════════
+       NÚT ĐIỀU KHIỂN NHẠC (NỔI Ở GÓC MÀN HÌNH)
+    ════════════════════════════════ */
+    .music-player-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .music-player-btn:hover {
+      transform: scale(1.15);
+    }
+    /* Xoay icon khi nhạc đang phát */
+    .music-player-btn.is-playing i {
+      animation: spin 4s linear infinite;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ── Mobile ────────────────────────────────────────────── */
+    @media (max-width: 767px) {
+      .nav__links { display: none; }
+      .hero__content-inner { padding: 2rem 1.25rem; }
+      .file-table__head { display: none; }
+      .file-row { grid-template-columns: 1fr auto; }
+      .file-type { display: none; }
+      .cert-grid { grid-template-columns: 1fr; }
+      .lightbox__close { right: 0.5rem; top: -3rem; }
+      .music-player-btn { bottom: 1.5rem; right: 1.5rem; width: 3rem; height: 3rem; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <video class="hero__video" autoplay loop muted playsinline>
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260416_101255_3099d3e4-d0cf-4e59-9666-97fbf521ac71.mp4" type="video/mp4" />
+    </video>
+    <div class="hero__overlay"></div>
+
+    <nav class="nav">
+      <div class="nav__inner">
+        <a href="#" class="nav__logo">Dawyn Dang</a>
+        <ul class="nav__links">
+          <li><a href="#" class="active">Home</a></li>
+          <li><a href="#projects">Dự Án</a></li>
+          <li><a href="#certificates">Chứng Chỉ</a></li>
+          <li><a href="#contact">Liên Hệ</a></li>
+        </ul>
+        <a href="#contact" class="btn btn--nav liquid-glass">Phuc Dat</a>
+      </div>
+    </nav>
+
+    <section class="hero__content">
+      <div class="hero__content-inner">
+        <h1 class="hero__title anim-1">
+          When the mind <em>becomes quiet</em> and the heart stays aware,
+          <em>every step we take turns into a path of wisdom and purpose.</em>
+        </h1>
+        <p class="hero__sub anim-2">
+          Khi tâm trí tĩnh lặng và trái tim luôn tỉnh thức, mỗi bước đi của chúng ta
+          đều trở thành con đường dẫn đến trí tuệ và mục đích sống.
+        </p>
+        <a href="#projects" class="btn btn--hero liquid-glass anim-3">By Phuc Dat</a>
+      </div>
+    </section>
+  </div>
+
+
+  <section id="projects" class="section">
+    <div class="section__inner">
+      <h2 class="section__title">
+        <i class="fas fa-folder-open"></i> Kho Tài Liệu &amp; Dự Án
+      </h2>
+      <div class="file-table">
+        <div class="file-table__head">
+          <div>Tên Tài Liệu</div>
+          <div>Loại file</div>
+          <div style="text-align:center">Hành động</div>
+        </div>
+
+        <div class="file-row">
+          <div class="file-row__info">
+            <div class="file-icon icon--pdf"><i class="fas fa-file-pdf"></i></div>
+            <div>
+              <div class="file-name">Test 1</div>
+              <div class="file-desc">đợi có bài tập sẽ up lên đây nhé!</div>
+            </div>
+          </div>
+          <div class="file-type">PDF (2.4 MB)</div>
+          <div style="display:flex;justify-content:center">
+            <a href="LINK_DRIVE_1" target="_blank" class="btn-dl"><i class="fas fa-cloud-download-alt"></i> Tải về</a>
+          </div>
+        </div>
+
+        <div class="file-row">
+          <div class="file-row__info">
+            <div class="file-icon icon--zip"><i class="fas fa-file-archive"></i></div>
+            <div>
+              <div class="file-name">Test 2</div>
+              <div class="file-desc">đợi có bài tập sẽ up lên đây nhé!</div>
+            </div>
+          </div>
+          <div class="file-type">ZIP (15.8 MB)</div>
+          <div style="display:flex;justify-content:center">
+            <a href="LINK_DRIVE_2" target="_blank" class="btn-dl"><i class="fas fa-cloud-download-alt"></i> Tải về</a>
+          </div>
+        </div>
+
+        <div class="file-row">
+          <div class="file-row__info">
+            <div class="file-icon icon--word"><i class="fas fa-file-word"></i></div>
+            <div>
+              <div class="file-name">Test 3</div>
+              <div class="file-desc">đợi có bài tập sẽ up lên đây nhé!</div>
+            </div>
+          </div>
+          <div class="file-type">DOCX (5.1 MB)</div>
+          <div style="display:flex;justify-content:center">
+            <a href="LINK_DRIVE_3" target="_blank" class="btn-dl"><i class="fas fa-cloud-download-alt"></i> Tải về</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="certificates" class="section section--alt">
+    <div class="section__inner">
+      <h2 class="section__title">
+        <i class="fas fa-award"></i> Bằng cấp &amp; Chứng chỉ
+      </h2>
+      <div class="cert-grid">
+
+        <div class="cert-card">
+          <img src="DCOHT bằng tốt nghiệp.jpg" alt="Bằng tốt nghiệp" class="cert-img"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="cert-img-placeholder" style="display:none">🎓</div>
+          <div class="cert-body">
+            <div class="cert-name">Bằng Tốt nghiệp CNTT — Ứng Dụng Phần Mềm K22-25</div>
+            <div class="cert-org">Trường Cao Đẳng Công nghệ cao Đồng Nai</div>
+            <span class="cert-badge badge--blue">Loại Xuất sắc</span>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <img src="chungtinUTE.jpg" alt="Chứng chỉ UTE" class="cert-img"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="cert-img-placeholder" style="display:none">💻</div>
+          <div class="cert-body">
+            <div class="cert-name">Chứng chỉ Tin học / Kỹ năng</div>
+            <div class="cert-org">Trung tâm Tin học — HCMUTE</div>
+            <a href="https://trungtamtinhoc.hcmute.edu.vn/tra-cuu-chung-chi" target="_blank" class="cert-link">
+              <i class="fas fa-external-link-alt" style="font-size:0.65rem"></i> Xác thực chứng chỉ tại đây
+            </a>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <img src="chungchiAI.png" alt="Chứng chỉ AI" class="cert-img"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="cert-img-placeholder" style="display:none">🤖</div>
+          <div class="cert-body">
+            <div class="cert-name">Chứng chỉ AI</div>
+            <div class="cert-org">Google — cấp 12/12/2025 → 12/12/2028</div>
+            <span class="cert-badge badge--green">35 / 37</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <div class="divider"></div>
+  <footer id="contact" class="contact">
+    <h2 class="contact__title">Kết nối với tui ở các nền tảng mxh này nheee 👋</h2>
+    <div class="social-row">
+      <a href="https://www.facebook.com/profile.php?id=100082600956831" target="_blank" class="social-btn social-btn--fb">
+        <i class="fab fa-facebook"></i> Facebook
+      </a>
+      <a href="https://www.tiktok.com/@danion.dorani" target="_blank" class="social-btn social-btn--tt">
+        <i class="fab fa-tiktok"></i> TikTok
+      </a>
+      <a href="mailto:pdatt262@gmail.com" class="social-btn social-btn--em">
+        <i class="fas fa-envelope"></i> Email
+      </a>
+    </div>
+    <p class="contact__copy">© 2026 Dawyn Dang (Dang Nguyen Phuc Dat) Portfolio • All Rights Reserved</p>
+  </footer>
+
+
+  <audio id="bg-music" autoplay loop>
+    <source src="YTSave_YouTube_Em-muon-hon-o-day-remix-Hon-Vao-Day-Di-V_Media_fh1AaTnuOzQ_009_128k.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="music-btn" class="music-player-btn liquid-glass" aria-label="Play/Pause Music">
+    <i class="fas fa-volume-mute"></i>
+  </button>
+
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox__content">
+      <button class="lightbox__close" id="lightbox-close"><i class="fas fa-times"></i></button>
+      <img src="" alt="Chứng chỉ phóng to" class="lightbox__img" id="lightbox-img" />
+    </div>
+  </div>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      
+      // ─── 1. XỬ LÝ NHẠC NỀN (BACKGROUND MUSIC) ─────────────────────────────────
+      const bgMusic = document.getElementById('bg-music');
+      const musicBtn = document.getElementById('music-btn');
+      const musicIcon = musicBtn.querySelector('i');
+      let isPlaying = false;
+
+      // Hàm cập nhật giao diện nút khi nhạc đang hát
+      const setPlayingState = () => {
+        isPlaying = true;
+        musicIcon.className = 'fas fa-music'; // Đổi icon sang nốt nhạc
+        musicBtn.classList.add('is-playing'); // Cho cái nút xoay vòng vòng
+      };
+
+      // Cố gắng tự động phát ngay khi vừa load trang
+      bgMusic.play().then(() => {
+        setPlayingState();
+      }).catch((error) => {
+        console.log("Trình duyệt chặn Autoplay. Đang chờ bạn click hoặc lăn chuột...");
+      });
+
+      // Bật/tắt thủ công khi bấm vào nút
+      const toggleMusic = () => {
+        if (isPlaying) {
+          bgMusic.pause();
+          musicIcon.className = 'fas fa-volume-mute';
+          musicBtn.classList.remove('is-playing');
+          isPlaying = false;
+        } else {
+          bgMusic.play().then(() => setPlayingState());
+        }
+      };
+
+      musicBtn.addEventListener('click', toggleMusic);
+
+      // Tuyệt chiêu lách luật: Tự phát nhạc ngay lần chạm/cuộn chuột đầu tiên
+      const autoPlayOnInteraction = () => {
+        if (!isPlaying) {
+          bgMusic.play().then(() => setPlayingState());
+        }
+        // Phát xong thì gỡ sự kiện này đi để không bị lặp lại
+        document.removeEventListener('click', autoPlayOnInteraction);
+        document.removeEventListener('scroll', autoPlayOnInteraction);
+      };
+
+      document.addEventListener('click', autoPlayOnInteraction);
+      document.addEventListener('scroll', autoPlayOnInteraction, { once: true });
+
+
+      // ─── 2. XỬ LÝ LIGHTBOX (PHÓNG TO ẢNH) ────────────────────────────────────
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = document.getElementById('lightbox-close');
+      const certImages = document.querySelectorAll('.cert-img');
+
+      certImages.forEach(img => {
+        img.addEventListener('click', () => {
+          lightboxImg.src = img.src;
+          lightbox.classList.add('active');
+        });
+      });
+
+      const closeLightbox = () => {
+        lightbox.classList.remove('active');
+      };
+
+      closeBtn.addEventListener('click', closeLightbox);
+
+      lightbox.addEventListener('click', (e) => {
+        if (e.target !== lightboxImg && e.target !== closeBtn && !closeBtn.contains(e.target)) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+          closeLightbox();
+        }
+      });
+
+    });
+  </script>
+
+</body>
+</html>
